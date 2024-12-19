@@ -1,0 +1,27 @@
+$script_path = "/PATH_TO_SCRIPT/alert_handler.py";
+
+on beacon_initial {
+        $computer = beacon_info($1, "computer");
+        $external = beacon_info($1, "external");
+        $internal = beacon_info($1, "internal");
+        $arch = beacon_info($1, "arch");
+        $user = beacon_info($1, "user");
+
+        $beacon_text = "================================
+
+New Beacon Notification
+
+================================
+
+User          : $user
+Computer Name : $computer
+External IP   : $external
+Internal IP   : $internal
+Architecture  : $arch
+
+===============================";
+
+        println("Sending beacon notification for: ".$computer);
+        @exec_command = @('python3', $script_path, $beacon_text);
+        exec(@exec_command);
+}
